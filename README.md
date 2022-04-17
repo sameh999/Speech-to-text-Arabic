@@ -1,11 +1,13 @@
 # Record your voice to text using Flask 
 
-In this blog post, we are going to create a simple web app that allows us record our voice from the web browser and convert it to text by using the we browser
+ we are going to create a simple web app that allows us record our voice from the web browser and convert it to text by using the we browser
+ i use flask and aws azure 
+ 
 
 First we get the main programs
 
 ```
-git clone https://github.com/ruslanmv/Voice-to-text-with-Python-in-Flask.git
+git clone https://github.com/sameh999/Speech-to-text-Arabic
 ```
 
 we enter to the folder
@@ -17,8 +19,8 @@ cd Voice-to-text-with-Python-in-Flask
 Create Python Virtual Environment
 
 ```
-python -m venv transcribe
-source transcribe/bin/activate
+python -m venv env1
+source env1/bin/activate
 ```
 
 Install Flask and  Gunicorn
@@ -36,7 +38,8 @@ We can see that the app.py file contains the information relevant to convert aud
 ```python
 from flask import Flask, render_template, request, redirect
 import speech_recognition as sr
-
+import transcribe_basics as tr
+import time
 app = Flask(__name__)
 
 
@@ -54,22 +57,30 @@ def index():
             return redirect(request.url)
 
         if file:
-            recognizer = sr.Recognizer()
-            audioFile = sr.AudioFile(file)
-            with audioFile as source:
-                data = recognizer.record(source)
-            transcript = recognizer.recognize_google(data, key=None)
+           audio_path = f'Audio\demo-{time.time_ns()}.wav'
+           audio_name =f'demo-{time.time_ns()}'
+           recognizer = sr.Recognizer()
+           audioFile = sr.AudioFile(file)
 
+           with audioFile as source:
+               data = recognizer.record(source)
+            
+           with open(audio_path, "wb") as f:
+               f.write(data.get_wav_data())
+
+           transcript = tr.Transcribe(audio_path , audio_name)
     return render_template('index.html', transcript=transcript)
 
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
+
 ```
 
 The entry point to the application, wsgi.py
 
-
+and get get the aodio and send to aws speech to text transcribe 
+in transcribe_basics.y contain 
 
 **wsgi.py**
 
