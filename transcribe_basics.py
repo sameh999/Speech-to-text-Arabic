@@ -7,8 +7,6 @@ import boto3
 from botocore.exceptions import ClientError
 import requests 
 #from boto3.s3.connection import Key, S3Connection 
-WS_SERVER_PUBLIC_KEY = "AKIAV7ST367FOVQPH6F7" 
-Secret_key = "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"
 region ="us-east-1"
 session = boto3.Session(
     aws_access_key_id=WS_SERVER_PUBLIC_KEY,
