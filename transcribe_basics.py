@@ -3,6 +3,7 @@
 import logging
 import sys
 import time
+from unittest import result
 import boto3
 from botocore.exceptions import ClientError
 import requests 
@@ -50,7 +51,6 @@ def start_job(job_name, media_uri, media_format, language_code, transcribe_clien
             'Media': {'MediaFileUri': media_uri},
             'MediaFormat': media_format,
             'LanguageCode': language_code}
-        print("Started transcription job ---1 %s.", job_name)
         if vocabulary_name is not None:
             job_args['Settings'] = {'VocabularyName': vocabulary_name}
         print("Started transcription job ---2 %s.", job_name)
@@ -196,11 +196,12 @@ def Transcribe(local_file_path ,object_key):
     time.sleep(70)
     # transcribe_waiter = TranscribeCompleteWaiter(transcribe_client)
     # transcribe_waiter.wait(job_name_simple)
-    job_simple = get_job(job_name_simple, transcribe_client)
-    print("sameh"*5)
-    transcript_simple = requests.get(job_simple['Transcript']['TranscriptFileUri']).json()
-    print(f"Transcript for job {transcript_simple['jobName']}:")
-    result = transcript_simple['results']['transcripts'][0]['transcript']
-    print("sameh"*5)
+    # job_simple = get_job(job_name_simple, transcribe_client)
+    # print("sameh"*5)
+    # transcript_simple = requests.get(job_simple['Transcript']['TranscriptFileUri']).json()
+    # print(f"Transcript for job {transcript_simple['jobName']}:")
+    # result = transcript_simple['results']['transcripts'][0]['transcript']
+    result = "sameh"*5
+    print(result)
     print('-'*88)
     return result   
