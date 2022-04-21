@@ -7,17 +7,12 @@ import boto3
 from botocore.exceptions import ClientError
 import requests 
 import os
-#from boto3.s3.connection import Key, S3Connection 
-# WS_SERVER_PUBLIC_KEY = "AKIAV7ST367FOVQPH6F7" 
-# Secret_key = "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"
 region ="us-east-1"
 session = boto3.Session(
     aws_access_key_id=os.environ.get('AWS_ACCESS_KEY'),
     aws_secret_access_key = os.environ.get('AWS_SECRET_KEY'),
     region_name =region
 )
-#s3 = session.resource('s3')
-
 S3_BUCKET = os.environ.get('S3_BUCKET')
 sys.path.append('../..')
 from custom_waiter import CustomWaiter, WaitState
