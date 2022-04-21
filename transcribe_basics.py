@@ -50,9 +50,10 @@ def start_job(job_name, media_uri, media_format, language_code, transcribe_clien
             'Media': {'MediaFileUri': media_uri},
             'MediaFormat': media_format,
             'LanguageCode': language_code}
-        logger.info("Started transcription job %s.", job_name)
+        print("Started transcription job ---1 %s.", job_name)
         if vocabulary_name is not None:
             job_args['Settings'] = {'VocabularyName': vocabulary_name}
+        print("Started transcription job ---2 %s.", job_name)
         response = transcribe_client.start_transcription_job(**job_args)
         job = response['TranscriptionJob']
         logger.info("Started transcription job %s.", job_name)
@@ -188,7 +189,7 @@ def upload_bucket(bucket_name ,local_file_path, obj_key):
 
 def Transcribe(local_file_path ,object_key):
     transcribe_client = session.client('transcribe')
-    media_uri =upload_bucket(os.environ.get('S3_BUCKET'), local_file_path , object_key)
+    media_uri =upload_bucket(S3_BUCKET, local_file_path , object_key)
     job_name_simple = f'demo-{time.time_ns()}'
     print(f"Starting transcription job {job_name_simple}")
     start_job( job_name_simple, media_uri, 'wav', 'ar-AE', transcribe_client)

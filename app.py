@@ -34,7 +34,7 @@ def index():
             with open(audio_path, "wb") as f:
                f.write(data.get_wav_data())
 
-            transcript = tr.Transcribe(audio_path , audio_path)
+            transcript = tr.Transcribe(audio_path , audio_name)
     return render_template('index.html', transcript=transcript)
 
 
