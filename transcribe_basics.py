@@ -187,7 +187,7 @@ def upload_bucket(bucket_name ,local_file_path, obj_key):
 
 def Transcribe(local_file_path ,object_key):
     transcribe_client = session.client('transcribe')
-    media_uri =upload_bucket(os.environ.get('S3_BUCKET'), local_file_path , object_key)
+    media_uri =upload_bucket(S3_BUCKET, local_file_path , object_key)
     job_name_simple = f'demo-{time.time_ns()}'
     print(f"Starting transcription job {job_name_simple}")
     start_job( job_name_simple, media_uri, 'wav', 'ar-AE', transcribe_client)
