@@ -6,19 +6,23 @@ import time
 import boto3
 from botocore.exceptions import ClientError
 import requests 
+import os
 #from boto3.s3.connection import Key, S3Connection 
-WS_SERVER_PUBLIC_KEY = "AKIAV7ST367FOVQPH6F7" 
-Secret_key = "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"
+# WS_SERVER_PUBLIC_KEY = "AKIAV7ST367FOVQPH6F7" 
+# Secret_key = "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"
 region ="us-east-1"
 session = boto3.Session(
-    aws_access_key_id=WS_SERVER_PUBLIC_KEY,
-    aws_secret_access_key=Secret_key,
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY'),
+    aws_secret_access_key = os.environ.get('AWS_SECRET_KEY'),
     region_name =region
 )
-s3 = session.resource('s3')
+#s3 = session.resource('s3')
+
+S3_BUCKET = os.environ.get('S3_BUCKET')
 sys.path.append('../..')
 from custom_waiter import CustomWaiter, WaitState
 logger = logging.getLogger(__name__)
+
 
 class TranscribeCompleteWaiter(CustomWaiter):
     def __init__(self, client):
@@ -181,25 +185,24 @@ def delete_vocabulary(vocabulary_name, transcribe_client):
 def upload_bucket(bucket_name ,local_file_path, obj_key):
     
     s3_resource = session.resource('s3')
-    object_key =obj_key
     print(f"Creating bucket {bucket_name}.")
-    s3_resource.meta.client.upload_file(local_file_path , bucket_name, object_key)
-    media_uri = f's3://{bucket_name}/{object_key}'
+    s3_resource.meta.client.upload_file(local_file_path , bucket_name, obj_key)
+    media_uri = f's3://{bucket_name}/{obj_key}'
     return media_uri
 
 def Transcribe(local_file_path ,object_key):
     transcribe_client = session.client('transcribe')
-    media_uri =upload_bucket('myfilestorage1' ,local_file_path, object_key)
+    media_uri =upload_bucket(os.environ.get('S3_BUCKET'), local_file_path , object_key)
     job_name_simple = f'demo-{time.time_ns()}'
-    print(f"Starting transcription job {job_name_simple}.")
+    print(f"Starting transcription job {job_name_simple}")
     start_job( job_name_simple, media_uri, 'wav', 'ar-AE', transcribe_client)
     transcribe_waiter = TranscribeCompleteWaiter(transcribe_client)
     transcribe_waiter.wait(job_name_simple)
     job_simple = get_job(job_name_simple, transcribe_client)
-    transcript_simple = requests.get(
-        job_simple['Transcript']['TranscriptFileUri']).json()
+    print("sameh"*5)
+    transcript_simple = requests.get(job_simple['Transcript']['TranscriptFileUri']).json()
     print(f"Transcript for job {transcript_simple['jobName']}:")
     result = transcript_simple['results']['transcripts'][0]['transcript']
-    print(result)
+    print("sameh"*5)
     print('-'*88)
     return result

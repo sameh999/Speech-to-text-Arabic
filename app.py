@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
+import os
 app = Flask(__name__)
 
 
@@ -9,7 +10,7 @@ app = Flask(__name__)
 def index():
     transcript = ""
     if request.method == "POST":
-        print("FORM DATA RECEIVED")
+        print("FORM DATA transcript funcrion ")
 
         if "file" not in request.files:
             return redirect(request.url)
@@ -19,20 +20,24 @@ def index():
             return redirect(request.url)
 
         if file:
-           audio_path = f'Audio\demo-{time.time_ns()}.wav'
-           audio_name =f'demo-{time.time_ns()}'
-           recognizer = sr.Recognizer()
-           audioFile = sr.AudioFile(file)
+            # audio_path = f'demo-{time.time_ns()}.wav'
+            audio_path = os.path.join(os.getcwd(),f'static/Audio/demo-{time.time_ns()}.wav')
+            print(audio_path)
+            print("-"*80)
+            audio_name =f'demo-{time.time_ns()}'
+            recognizer = sr.Recognizer()
+            audioFile = sr.AudioFile(file)
 
-           with audioFile as source:
+            with audioFile as source:
                data = recognizer.record(source)
             
-           with open(audio_path, "wb") as f:
+            with open(audio_path, "wb") as f:
                f.write(data.get_wav_data())
 
-           transcript = tr.Transcribe(audio_path , audio_name)
+            transcript = tr.Transcribe(audio_path , audio_path)
     return render_template('index.html', transcript=transcript)
 
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
+

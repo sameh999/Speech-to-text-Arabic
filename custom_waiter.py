@@ -1,10 +1,6 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-"""
-Base class for implementing custom waiters for services that don't already have
-prebuilt waiters. This class leverages botocore waiter code.
-"""
 
 from enum import Enum
 import logging
@@ -15,7 +11,6 @@ logger = logging.getLogger(__name__)
 class WaitState(Enum):
     SUCCESS = 'success'
     FAILURE = 'failure'
-
 
 class CustomWaiter:
     """
@@ -43,7 +38,7 @@ class CustomWaiter:
 
     """
     def __init__(
-            self, name, operation, argument, acceptors, client, delay=10, max_tries=60,
+            self, name, operation, argument, acceptors, client, delay=10, max_tries=100,
             matcher='path'):
         """
         Subclasses should pass specific operations, arguments, and acceptors to
@@ -60,10 +55,8 @@ class CustomWaiter:
                           can indicate either success or failure. The acceptor values
                           are compared to the result of the operation after the
                           argument keys are applied.
-        :param client: The Boto3 client.
-        :param delay: The number of seconds to wait between each call to the operation.
-        :param max_tries: The maximum number of tries before exiting.
-        :param matcher: The kind of matcher to use.
+
+        
         """
         self.name = name
         self.operation = operation
@@ -87,13 +80,6 @@ class CustomWaiter:
             self.name, self.waiter_model, self.client)
 
     def __call__(self, parsed, **kwargs):
-        """
-        Handles the after-call event by logging information about the operation and its
-        result.
-
-        :param parsed: The parsed response from polling the operation.
-        :param kwargs: Not used, but expected by the caller.
-        """
         status = parsed
         for key in self.argument.split('.'):
             if key.endswith('[]'):
@@ -104,11 +90,6 @@ class CustomWaiter:
             "Waiter %s called %s, got %s.", self.name, self.operation, status)
 
     def _wait(self, **kwargs):
-        """
-        Registers for the after-call event and starts the botocore wait loop.
-
-        :param kwargs: Keyword arguments that are passed to the operation being polled.
-        """
         event_name = f'after-call.{self.client.meta.service_model.service_name}'
         self.client.meta.events.register(event_name, self)
         self.waiter.wait(**kwargs)
