@@ -34,8 +34,8 @@ def index():
             with open(audio_path, "wb") as f:
                f.write(data.get_wav_data())
 
-            transcript = tr.Transcribe(audio_path , audio_name)
-    return render_template('index.html', transcript=transcript)
+            # transcript = tr.Transcribe(audio_path , audio_name)
+    return render_template('index.html', transcript="sannnnnnnnnnnnn")
 
 
 if __name__ == "__main__":
