@@ -20,8 +20,8 @@ def index():
             return redirect(request.url)
 
         if file:
-            # audio_path = f'demo-{time.time_ns()}.wav'
-            audio_path = os.path.join(os.getcwd(),f'static/Audio/demo-{time.time_ns()}.wav')
+            audio_path = f'demo-{time.time_ns()}.wav'
+            #audio_path = os.path.join(os.getcwd(),f'static/Audio/demo-{time.time_ns()}.wav')
             print(audio_path)
             print("-"*80)
             audio_name =f'demo-{time.time_ns()}'
