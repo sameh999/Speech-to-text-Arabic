@@ -13,51 +13,10 @@ class WaitState(Enum):
     FAILURE = 'failure'
 
 class CustomWaiter:
-    """
-    Base class for a custom waiter that leverages botocore's waiter code. Waiters
-    poll an operation, with a specified delay between each polling attempt, until
-    either an accepted result is returned or the number of maximum attempts is reached.
-
-    To use, implement a subclass that passes the specific operation, arguments,
-    and acceptors to the superclass.
-
-    For example, to implement a custom waiter for the transcription client that
-    waits for both success and failure outcomes of the get_transcription_job function,
-    create a class like the following:
-
-        class TranscribeCompleteWaiter(CustomWaiter):
-        def __init__(self, client):
-            super().__init__(
-                'TranscribeComplete', 'GetTranscriptionJob',
-                'TranscriptionJob.TranscriptionJobStatus',
-                {'COMPLETED': WaitState.SUCCESS, 'FAILED': WaitState.FAILURE},
-                client)
-
-        def wait(self, job_name):
-            self._wait(TranscriptionJobName=job_name)
-
-    """
     def __init__(
             self, name, operation, argument, acceptors, client, delay=10, max_tries=100,
             matcher='path'):
-        """
-        Subclasses should pass specific operations, arguments, and acceptors to
-        their superclass.
 
-        :param name: The name of the waiter. This can be any descriptive string.
-        :param operation: The operation to wait for. This must match the casing of
-                          the underlying operation model, which is typically in
-                          CamelCase.
-        :param argument: The dict keys used to access the result of the operation, in
-                         dot notation. For example, 'Job.Status' will access
-                         result['Job']['Status'].
-        :param acceptors: The list of acceptors that indicate the wait is over. These
-                          can indicate either success or failure. The acceptor values
-                          are compared to the result of the operation after the
-                          argument keys are applied.
-
-        
-        """
         self.name = name
         self.operation = operation
         self.argument = argument
