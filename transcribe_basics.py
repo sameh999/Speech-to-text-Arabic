@@ -201,7 +201,7 @@ def Transcribe(local_file_path ,object_key):
     # transcript_simple = requests.get(job_simple['Transcript']['TranscriptFileUri']).json()
     # print(f"Transcript for job {transcript_simple['jobName']}:")
     # result = transcript_simple['results']['transcripts'][0]['transcript']
-    result = "sameh"*5
+    result = "sameh mohamed"
     print(result)
     print('-'*88)
     return result   

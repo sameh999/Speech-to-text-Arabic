@@ -1,13 +1,10 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
-
-
 from enum import Enum
 import logging
 import botocore.waiter
 
 logger = logging.getLogger(__name__)
-
 class WaitState(Enum):
     SUCCESS = 'success'
     FAILURE = 'failure'
