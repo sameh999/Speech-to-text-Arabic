@@ -1,11 +1,13 @@
+import threading
 from flask import Flask, render_template, request, redirect
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
-import os
-from rq import Queue
-from worker import conn
-q = Queue(connection=conn)
+# import os
+# from redis import Redis
+# from rq import Queue
+# from worker import conn
+# q = Queue(connection=conn)
 from transcribe_basics import Transcribe
 
 app = Flask(__name__)
@@ -38,12 +40,22 @@ def index():
             
             with open(audio_path, "wb") as f:
                f.write(data.get_wav_data())
-
+            MyWorker('param_value')
             # transcript = tr.Transcribe(audio_path , audio_name)
             transcript = q.enqueue(Transcribe,audio_path , audio_name)
-
     return render_template('index.html', transcript=transcript)
 
+class MyWorker():
+
+  def __init__(self, message):
+    self.message = message
+
+    thread = threading.Thread(target=self.run, args=())
+    thread.daemon = True
+    thread.start()
+
+  def run(self):
+    print(f'run MyWorker with parameter {self.message}')
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
