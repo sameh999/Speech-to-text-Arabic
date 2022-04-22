@@ -2,11 +2,6 @@ from flask import Flask, render_template, request, redirect
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
-import os
-from rq import Queue
-from worker import conn
-q = Queue(connection=conn)
-from transcribe_basics import Transcribe
 
 app = Flask(__name__)
 
@@ -39,8 +34,7 @@ def index():
             with open(audio_path, "wb") as f:
                f.write(data.get_wav_data())
 
-            # transcript = tr.Transcribe(audio_path , audio_name)
-            transcript = q.enqueue(Transcribe,audio_path , audio_name)
+            transcript = tr.Transcribe(audio_path , audio_name)
 
     return render_template('index.html', transcript=transcript)
 
