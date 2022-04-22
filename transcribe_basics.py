@@ -53,7 +53,6 @@ def start_job(job_name, media_uri, media_format, language_code, transcribe_clien
             'LanguageCode': language_code}
         if vocabulary_name is not None:
             job_args['Settings'] = {'VocabularyName': vocabulary_name}
-        print("Started transcription job ---2 %s.", job_name)
         response = transcribe_client.start_transcription_job(**job_args)
         job = response['TranscriptionJob']
         logger.info("Started transcription job %s.", job_name)
