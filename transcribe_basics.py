@@ -193,7 +193,7 @@ def Transcribe(local_file_path ,object_key):
     job_name_simple = f'demo-{time.time_ns()}'
     print(f"Starting transcription job {job_name_simple}")
     start_job( job_name_simple, media_uri, 'wav', 'ar-AE', transcribe_client)
-    time.sleep(70)
+    # time.sleep(70)
     # transcribe_waiter = TranscribeCompleteWaiter(transcribe_client)
     # transcribe_waiter.wait(job_name_simple)
     # job_simple = get_job(job_name_simple, transcribe_client)
