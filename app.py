@@ -3,11 +3,10 @@ from flask import Flask, render_template, request, redirect
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
-# import os
-# from redis import Redis
-# from rq import Queue
-# from worker import conn
-# q = Queue(connection=conn)
+import os
+from flask import Flask, jsonify
+from threading import Thread
+
 from transcribe_basics import Transcribe
 
 app = Flask(__name__)
@@ -40,24 +39,40 @@ def index():
             
             with open(audio_path, "wb") as f:
                f.write(data.get_wav_data())
-            MyWorker('param_value')
-            # transcript = tr.Transcribe(audio_path , audio_name)
-            transcript = q.enqueue(Transcribe,audio_path , audio_name)
+
+            task(audio_path , audio_name)
+            transcript = " your audio under processing please wait...."
+            # transcript = get_results('results.txt',20)
+            print("transcript : ", transcript)
+            #transcript = tr.Transcribe(audio_path , audio_name)
+            #transcript = q.enqueue(Transcribe,audio_path , audio_name)
     return render_template('index.html', transcript=transcript)
 
-class MyWorker():
-
-  def __init__(self, message):
-    self.message = message
-
-    thread = threading.Thread(target=self.run, args=())
+def task(audio_path , audio_name):
+    thread = Thread(target=Transcribe, args=(audio_path , audio_name,))
     thread.daemon = True
     thread.start()
+    #return jsonify({'thread_name': str(thread.name),'started': True})
+    return thread
+def read(path_to_file):
+    with open(path_to_file) as f:
+        contents = f.readlines()
+    return contents
+def reed_trans(path= 'results.txt' ,time = 120 ):
+    
+    for i in range(time):
+        results = read(path)
+        time.sleep(5)
+        if results != '' :
+            print("reeded from text file"+results)
+            return render_template('index.html', transcript=results)
 
-  def run(self):
-    print(f'run MyWorker with parameter {self.message}')
+def get_results(path, t):
+    thread = Thread(target=reed_trans, args=(path , t,))
+    thread.daemon = True
+    thread.start()
+    return thread
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
-
 

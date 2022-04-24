@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Speech Recognition in Python</title>
+    <title>Speech Recognition </title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}" />
 	<!-- Latest compiled and minified Bootstrap CSS -->
     <!--
@@ -36,18 +36,22 @@
             <input type="submit" id="submitButton" value="Transcribe"/>
         </form>
 
+        <div id="speechTranscript">
         {% if transcript != "" %}
             <div id="speechTranscriptContainer">
                 <h1>Results</h1>
                 <p id="speechText">{{ transcript }}</p>
             </div>
         {% endif %}
+    </div>
 
     </div>
 
     <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
     <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
     <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
+    <script src="{{ url_for('static', filename='js/get_text.js') }}" ></script>
+
 
 </body>
 </html>

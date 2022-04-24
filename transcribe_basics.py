@@ -198,6 +198,21 @@ def Transcribe(local_file_path ,object_key):
     transcript_simple = requests.get(job_simple['Transcript']['TranscriptFileUri']).json()
     print(f"Transcript for job {transcript_simple['jobName']}:")
     result = transcript_simple['results']['transcripts'][0]['transcript']
+    delete_job(job_name_simple, transcribe_client)
     print(result)
+    createfile(result + " ")
     print('-'*88)
+    print(read('static/results.txt'))
+    os.remove(local_file_path)
     return result   
+
+def createfile(text):
+    # with open('results.txt', 'w'):
+    #     pass
+    f= open("results.txt","w+", encoding='utf-8')
+    f.write(text)
+    f.close
+def read(path_to_file):
+    with open(path_to_file) as f:
+        contents = f.readlines()
+    return contents
