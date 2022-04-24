@@ -36,6 +36,8 @@ def index():
             transcript = " your audio under processing please wait...."
             # transcript = get_results('results.txt',20)
             print("transcript : ", transcript)
+            time.sleep(10)
+
             #transcript = tr.Transcribe(audio_path , audio_name)
             #transcript = q.enqueue(Transcribe,audio_path , audio_name)
     return render_template('index.html', transcript=transcript)
