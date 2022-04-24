@@ -6,7 +6,7 @@ submitButton.addEventListener('click', getTextfile);
 
 function getTextfile()
 {
-  $.get('../results.txt', {cache:false}, function(data) 
+  $.get('static/results.txt', function(data) 
   {
     if (data !== " ") {
         console.log(data)
