@@ -1,6 +1,7 @@
 
-const submitButton = document.getElementById('submitButton');
-speechTranscript = document.getElementById('speechTranscript')
+var submitButton = document.getElementById('submitButton');
+var speechTranscript = document.getElementById('speechTranscript')
+
 submitButton.addEventListener('click', getTextfile);
 
 function getTextfile()

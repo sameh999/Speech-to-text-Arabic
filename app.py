@@ -1,23 +1,16 @@
-import threading
 from flask import Flask, render_template, request, redirect
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
 import os
-from flask import Flask, jsonify
 from threading import Thread
-
 from transcribe_basics import Transcribe
 
 app = Flask(__name__)
-
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     transcript = ""
     if request.method == "POST":
-        print("FORM DATA transcript funcrion ")
-
         if "file" not in request.files:
             return redirect(request.url)
 
@@ -27,7 +20,6 @@ def index():
 
         if file:
             audio_path = f'demo-{time.time_ns()}.wav'
-            #audio_path = os.path.join(os.getcwd(),f'static/Audio/demo-{time.time_ns()}.wav')
             print(audio_path)
             print("-"*80)
             audio_name =f'demo-{time.time_ns()}'
@@ -52,7 +44,6 @@ def task(audio_path , audio_name):
     thread = Thread(target=Transcribe, args=(audio_path , audio_name,))
     thread.daemon = True
     thread.start()
-    #return jsonify({'thread_name': str(thread.name),'started': True})
     return thread
 def read(path_to_file):
     with open(path_to_file) as f:
