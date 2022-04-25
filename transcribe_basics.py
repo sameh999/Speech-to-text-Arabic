@@ -198,8 +198,8 @@ def Transcribe(local_file_path ,object_key):
     result = transcript_simple['results']['transcripts'][0]['transcript']
     delete_job(job_name_simple, transcribe_client)
     print(result)
-    createfile(result + " ")
-    print('-'*88)
+    createfile(result )
+    print("reed from text file" +'-'*88)
     print(read('static/results.txt'))
     os.remove(local_file_path)
     return result   
@@ -214,3 +214,4 @@ def read(path_to_file):
     with open(path_to_file) as f:
         contents = f.readlines()
     return contents
+

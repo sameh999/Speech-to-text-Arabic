@@ -31,13 +31,10 @@ def index():
             
             with open(audio_path, "wb") as f:
                f.write(data.get_wav_data())
-
+               
             task(audio_path , audio_name)
             transcript = " your audio under processing please wait...."
-            # transcript = get_results('results.txt',20)
             print("transcript : ", transcript)
-            #transcript = tr.Transcribe(audio_path , audio_name)
-            #transcript = q.enqueue(Transcribe,audio_path , audio_name)
     return render_template('index.html', transcript=transcript)
 
 def task(audio_path , audio_name):
@@ -45,25 +42,6 @@ def task(audio_path , audio_name):
     thread.daemon = True
     thread.start()
     return thread
-def read(path_to_file):
-    with open(path_to_file) as f:
-        contents = f.readlines()
-    return contents
-def reed_trans(path= 'results.txt' ,time = 120 ):
-    
-    for i in range(time):
-        results = read(path)
-        time.sleep(5)
-        if results != '' :
-            print("reeded from text file"+results)
-            return render_template('index.html', transcript=results)
-
-def get_results(path, t):
-    thread = Thread(target=reed_trans, args=(path , t,))
-    thread.daemon = True
-    thread.start()
-    return thread
-
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
 
