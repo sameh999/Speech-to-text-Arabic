@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect
-from matplotlib.pyplot import text
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
