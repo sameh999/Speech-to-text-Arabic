@@ -43,17 +43,27 @@
                 <p id="speechText">{{ transcript }}</p>
             </div>
         {% endif %}
+        <p id="arabic"></p>
         </div>
     </div>
-    <script>
+    <!-- <script>
         $("#get_txt").click(function(){
             $.get(document.getElementById("txt").textContent, function(data, status){
                 alert("Data: " + data + "\nStatus: " + status);
-
+                document.getElementById("arabic").textContent = data
                 cons.console.log(data);
+                
             });
         });
+    </script> -->
+    <script>    
+        const url1 = 'https://raw.githubusercontent.com/ProjectSakura/OTA/10/changelog/changelog_beryllium.txt'
+        const response = await fetch(url1);
+        const data = await response.text();
+        document.getElementById("arabic").textContent = data
+        console.log(data);
     </script>
+
 
     <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
     <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
