@@ -36,10 +36,10 @@
         <p id="txt"> </p>
 
         <div id="speechTranscript">
-        {% if results["transcript"] != "" %}
+        {% if transcript != "" %}
             <div id="speechTranscriptContainer">
                 <h1>Results</h1>
-                <p id="speechText">{{ results["transcript"]}}</p>
+                <p id="speechText">{{ transcript }}</p>
             </div>
         {% endif %}
         </div>
