@@ -38,7 +38,7 @@ def index():
             
             transcript = " your audio under processing please wait...."
             textfile_path= "https://myfilestorage1.s3.amazonaws.com/"+ audio_name + ".txt"
-    return render_template('index.html',results =jsonify( transcript = transcript , url = textfile_path) )
+    return render_template('index.html', transcript = transcript , url = textfile_path )
 
 def task(audio_path , audio_name):
     thread = Thread(target=Transcribe, args=(audio_path , audio_name,))

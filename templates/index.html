@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}" />
 	<!-- Latest compiled and minified Bootstrap CSS -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 </head>
 <body>
     <h1>Transcribe your voice to text </h1>
@@ -35,11 +36,11 @@
         <button id="get_txt">get text</button>
         
         <div id="speechTranscript">
-        {% if results['transcript'] != "" %}
-            <p id="txt">{{ results['url'] }}</p>
+        {% if transcript != "" %}
+            <p id="txt">{{ url }}</p>
             <div id="speechTranscriptContainer">
                 <h1>Results</h1>
-                <p id="speechText">{{ results['transcript'] }}</p>
+                <p id="speechText">{{ transcript }}</p>
             </div>
         {% endif %}
         </div>
