@@ -32,15 +32,27 @@
             <input type="submit" id="submitButton" value="Transcribe"/>
         </form>
 
+        <button id="get_txt">get text</button>
+        <p id="txt"> </p>
+
         <div id="speechTranscript">
-        {% if transcript != "" %}
+        {% if results["transcript"] != "" %}
             <div id="speechTranscriptContainer">
                 <h1>Results</h1>
-                <p id="speechText">{{ transcript }}</p>
+                <p id="speechText">{{ results["transcript"]}}</p>
             </div>
         {% endif %}
         </div>
     </div>
+    <script>
+        $("#get_txt").click(function(){
+            $.get("demo_test.asp", function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+
+                cons.console.log(data);
+            });
+        });
+    </script>
 
     <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
     <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
