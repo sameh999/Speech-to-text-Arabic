@@ -57,11 +57,15 @@
         });
     </script> -->
     <script>    
-        const url1 = 'https://raw.githubusercontent.com/ProjectSakura/OTA/10/changelog/changelog_beryllium.txt'
-        const response = await fetch(url1);
-        const data = await response.text();
-        document.getElementById("arabic").textContent = data
-        console.log(data);
+        const url1 = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
+        async function start() {
+            const response = await fetch(url1);
+            const data = await response.text();
+            document.getElementById("arabic").textContent = data
+            console.log(data);
+
+             }
+        
     </script>
 
 
