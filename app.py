@@ -11,6 +11,7 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
     transcript = ""
+    textfile_path=""
     if request.method == "POST":
         if "file" not in request.files:
             return redirect(request.url)
