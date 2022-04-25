@@ -34,7 +34,6 @@ def index():
                
             task(audio_path , audio_name)
             transcript = " your audio under processing please wait...."
-            print("transcript : ", transcript)
     return render_template('index.html', transcript=transcript)
 
 def task(audio_path , audio_name):

@@ -198,7 +198,9 @@ def Transcribe(local_file_path ,object_key):
     result = transcript_simple['results']['transcripts'][0]['transcript']
     delete_job(job_name_simple, transcribe_client)
     print(result)
-    file_url ="static/results.txt"
+    file_url ="results.txt"
+    # file_url= "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt"
+    url =upload_bucket(S3_BUCKET, file_url ,file_url)
     createfile(file_url ,result )
     print("reed from text file" +'-'*88)
     print(read(file_url))
