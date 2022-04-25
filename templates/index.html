@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}" />
 	<!-- Latest compiled and minified Bootstrap CSS -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
 </head>
 <body>
@@ -57,15 +58,20 @@
         });
     </script> -->
     <script>    
-        const url1 = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
-        async function start() {
-            const response = await fetch(url1);
-            const data = await response.text();
-            document.getElementById("arabic").textContent = data
-            console.log(data);
+        const filepath = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
+        function readTextFile(filepath) {
+        var str = "";
+        var txtFile = new File(filepath);
+        txtFile.open("r");
+        while (!txtFile.eof) {
+            // read each line of text
+            str += txtFile.readln() + "\n";
+            }
+        return str;
+        }
+        var get_text = document.getElementById("get_txt");
+        get_text.addEventListener("click", readTextFile);
 
-             }
-        
     </script>
 
 
