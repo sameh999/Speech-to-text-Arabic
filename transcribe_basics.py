@@ -198,16 +198,17 @@ def Transcribe(local_file_path ,object_key):
     result = transcript_simple['results']['transcripts'][0]['transcript']
     delete_job(job_name_simple, transcribe_client)
     print(result)
-    createfile(result )
+    file_url ="static/results.txt"
+    createfile(file_url ,result )
     print("reed from text file" +'-'*88)
-    print(read('static/results.txt'))
+    print(read(file_url))
     os.remove(local_file_path)
     return result   
 
-def createfile(text):
+def createfile( url ,text):
     # with open('results.txt', 'w'):
     #     pass
-    f= open("results.txt","w+", encoding='utf-8')
+    f= open(url,"w+", encoding='utf-8')
     f.write(text)
     f.close
 def read(path_to_file):
