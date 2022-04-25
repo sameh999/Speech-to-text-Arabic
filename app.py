@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect ,jsonify
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
 import os
+
 from threading import Thread
 from transcribe_basics import Transcribe
 
@@ -36,7 +37,7 @@ def index():
             
             transcript = " your audio under processing please wait...."
             textfile_path= "https://myfilestorage1.s3.amazonaws.com/"+ audio_name + ".txt"
-    return render_template('index.html',results= { "transcript" : transcript ,"url":textfile_path } )
+    return render_template('index.html',results =jsonify( transcript = transcript , url = textfile_path) )
 
 def task(audio_path , audio_name):
     thread = Thread(target=Transcribe, args=(audio_path , audio_name,))
