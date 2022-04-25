@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from matplotlib.pyplot import text
 import speech_recognition as sr
 import transcribe_basics as tr
 import time
@@ -33,7 +34,9 @@ def index():
                f.write(data.get_wav_data())
                
             task(audio_path , audio_name)
+            
             transcript = " your audio under processing please wait...."
+            textfile_path= "https://myfilestorage1.s3.amazonaws.com/"+ audio_name + ".txt"
     return render_template('index.html', transcript=transcript)
 
 def task(audio_path , audio_name):

@@ -186,7 +186,7 @@ def upload_bucket(bucket_name ,local_file_path, obj_key):
 
 def Transcribe(local_file_path ,object_key):
     transcribe_client = session.client('transcribe')
-    media_uri =upload_bucket(S3_BUCKET, local_file_path , object_key)
+    media_uri =upload_bucket(S3_BUCKET, local_file_path , local_file_path)
     job_name_simple = f'demo-{time.time_ns()}'
     print(f"Starting transcription job {job_name_simple}")
     start_job( job_name_simple, media_uri, 'wav', 'ar-AE', transcribe_client)
@@ -198,13 +198,13 @@ def Transcribe(local_file_path ,object_key):
     result = transcript_simple['results']['transcripts'][0]['transcript']
     delete_job(job_name_simple, transcribe_client)
     print(result)
-    file_url = local_file_path +".txt"
+    file_url = object_key +".txt"
     createfile(file_url ,result )
     print("reed from text file" +'-'*88)
     # file_url= "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt"
     url =upload_bucket(S3_BUCKET, file_url ,file_url)
    
-    print("uri link" + url)
+    print("uri link " + url)
     print(read(file_url))
     os.remove(local_file_path)
     return result   
