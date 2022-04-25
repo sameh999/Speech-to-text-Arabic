@@ -33,13 +33,13 @@
         </form>
 
         <button id="get_txt">get text</button>
-        <p id="txt"> </p>
-
+        
         <div id="speechTranscript">
-        {% if transcript != "" %}
+        {% if results["transcript"] != "" %}
+            <p id="txt"> results["url"] </p>
             <div id="speechTranscriptContainer">
                 <h1>Results</h1>
-                <p id="speechText">{{ transcript }}</p>
+                <p id="speechText">{{ results['transcript'] }}</p>
             </div>
         {% endif %}
         </div>
