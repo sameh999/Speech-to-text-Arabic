@@ -46,7 +46,20 @@
         {% endif %}
         <p id="arabic"></p>
         </div>
-    </div>
+        </div>
+
+        <h1>Load Data from text file </h1>
+
+        <button type="button" onclick="loadDoc()">Change Content</button>
+    
+        <script>
+            function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "info.txt", true);
+            xhttp.send();
+            document.getElementById("demo").innerHTML = xhttp.responseText;
+            }
+        </script>>
     <!-- <script>
         $("#get_txt").click(function(){
             $.get(document.getElementById("txt").textContent, function(data, status){
