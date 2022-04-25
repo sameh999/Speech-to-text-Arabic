@@ -55,9 +55,10 @@
         <script>
             function loadDoc() {
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "info.txt", true);
+            xhttp.open("GET", "results.txt", true);
             xhttp.send();
-            document.getElementById("demo").innerHTML = xhttp.responseText;
+            document.getElementById("arabic").innerHTML = xhttp.responseText;
+            console.log(xhttp.responseText)
             }
         </script>>
     <!-- <script>
@@ -70,7 +71,7 @@
             });
         });
     </script> -->
-    <script>    
+    <!-- <script>    
         const filepath = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
         function readTextFile(filepath) {
         var str = "";
@@ -85,7 +86,7 @@
         var get_text = document.getElementById("get_txt");
         get_text.addEventListener("click", readTextFile);
 
-    </script>
+    </script> -->
 
 
     <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
