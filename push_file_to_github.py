@@ -63,7 +63,7 @@ def push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token
     if sha:
         inputdata["sha"] = str(sha)
 
-    updateURL = "https://api.github.com/repos/EBISPOT/RDF-platform/contents/" + gitHubFileName
+    updateURL = "https://api.github.com/repos/sameh999/Speech-to-text-Arabic/commits/" + gitHubFileName
     try:
         rPut = requests.put(updateURL, auth=(user,token), data = json.dumps(inputdata))
         if not rPut.ok:
