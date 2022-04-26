@@ -37,8 +37,7 @@
             <input type="submit" id="submitButton" value="Transcribe"/>
         </form>
 
-        <button id="get_txt">get text</button>
-        
+     
         <div id="speechTranscript">
         {% if transcript != "" %}
             <p id="txt">{{ url }}</p>
@@ -50,8 +49,6 @@
         <p id="arabic"></p>
         </div>
         </div>
-
-        <h1>Load Data from text file </h1>
 
         <button type="button" id="btt">Change Content</button>
     
@@ -66,7 +63,7 @@
         </script>> -->
     <script>
         $("#btt").click(function(){
-            $.get( "https://myfilestorage1.s3.amazonaws.com/demo-1650906453186873009.txt", function(data, status){
+            $.get( "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt", function(data, status){
                 alert("Data: " + data + "\nStatus: " + status);
                 document.getElementById("arabic").textContent = data
                 cons.console.log(data);
