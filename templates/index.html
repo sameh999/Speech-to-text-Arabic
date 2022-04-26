@@ -57,13 +57,40 @@
         <script>
             function loadDoc() {
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "results.txt", true);
+            xhttp.open("GET", "'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'", true);
             xhttp.send();
             document.getElementById("arabic").innerHTML = xhttp.responseText;
             console.log(xhttp.responseText)
             }
         </script>>
-   
+    <!-- <script>
+        $("#get_txt").click(function(){
+            $.get(document.getElementById("txt").textContent, function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+                document.getElementById("arabic").textContent = data
+                cons.console.log(data);
+                
+            });
+        });
+    </script> -->
+    <!-- <script>    
+        const filepath = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
+        function readTextFile(filepath) {
+        var str = "";
+        var txtFile = new File(filepath);
+        txtFile.open("r");
+        while (!txtFile.eof) {
+            // read each line of text
+            str += txtFile.readln() + "\n";
+            }
+        return str;
+        }
+        var get_text = document.getElementById("get_txt");
+        get_text.addEventListener("click", readTextFile);
+
+    </script> -->
+
+
     <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
     <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
     <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
