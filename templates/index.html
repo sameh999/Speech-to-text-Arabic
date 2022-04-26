@@ -52,27 +52,27 @@
 
         <h1>Load Data from text file </h1>
 
-        <button type="button" onclick="loadDoc()">Change Content</button>
+        <button type="button" id="btt">Change Content</button>
     
-        <script>
+        <!-- <script>
             function loadDoc() {
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'", true);
+            xhttp.open("GET", "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt", true);
             xhttp.send();
             document.getElementById("arabic").innerHTML = xhttp.responseText;
             console.log(xhttp.responseText)
-            }
-        </script>>
-    <!-- <script>
-        $("#get_txt").click(function(){
-            $.get(document.getElementById("txt").textContent, function(data, status){
+            }document.getElementById("txt").textContent
+        </script>> -->
+    <script>
+        $("#btt").click(function(){
+            $.get("https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt", function(data, status){
                 alert("Data: " + data + "\nStatus: " + status);
                 document.getElementById("arabic").textContent = data
                 cons.console.log(data);
                 
             });
         });
-    </script> -->
+    </script>
     <!-- <script>    
         const filepath = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
         function readTextFile(filepath) {
