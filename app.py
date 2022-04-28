@@ -35,10 +35,8 @@ def index():
                f.write(data.get_wav_data())
                
             task(audio_path , audio_name)
-            
-            transcript = " your audio under processing please wait...."
-            textfile_path= "https://myfilestorage1.s3.amazonaws.com/"+ audio_name + ".txt"
-    return render_template('index.html', transcript = transcript , url = textfile_path )
+            transcript = " the text will be available a soon as possible "
+    return render_template('index.html', transcript = transcript )
 
 def task(audio_path , audio_name):
     thread = Thread(target=Transcribe, args=(audio_path , audio_name,))

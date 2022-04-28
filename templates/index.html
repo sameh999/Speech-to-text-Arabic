@@ -7,9 +7,9 @@
 	<!-- Latest compiled and minified Bootstrap CSS -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
-   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+   <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-   <script src="https://sdk.amazonaws.com/js/aws-sdk-SDK_VERSION_NUMBER.js"></script>
+   <script src="https://sdk.amazonaws.com/js/aws-sdk-SDK_VERSION_NUMBER.js"></script> -->
 
 
 </head>
@@ -36,11 +36,9 @@
             <h3>Convert audio to text </h3> 
             <input type="submit" id="submitButton" value="Transcribe"/>
         </form>
-
      
         <div id="speechTranscript">
         {% if transcript != "" %}
-            <p id="txt">{{ url }}</p>
             <div id="speechTranscriptContainer">
                 <h1>Results</h1>
                 <p id="speechText">{{ transcript }}</p>
@@ -49,8 +47,6 @@
         <p id="arabic"></p>
         </div>
         </div>
-
-        <button type="button" id="btt">Change Content</button>
     
         <!-- <script>
             function loadDoc() {
@@ -61,7 +57,7 @@
             console.log(xhttp.responseText)
             }document.getElementById("txt").textContent
         </script>> -->
-    <script>
+    <!-- <script>
         $("#btt").click(function(){
             $.get( "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt", function(data, status){
                 alert("Data: " + data + "\nStatus: " + status);
@@ -70,7 +66,7 @@
                 
             });
         });
-    </script>
+    </script> -->
     <!-- <script>    
         const filepath = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
         function readTextFile(filepath) {
@@ -93,7 +89,7 @@
     <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
     <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
     <script src="{{ url_for('static', filename='js/get_text.js') }}" ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    
 
 </body>
 </html>

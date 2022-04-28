@@ -5,7 +5,7 @@ In this blog post, we are going to create a simple web app that allows us record
 First we get the main programs
 
 ```
-git clone https://github.com/ruslanmv/Voice-to-text-with-Python-in-Flask.git
+git clone https://github.com/sameh999/Speech-to-text-Arabic.git
 ```
 
 we enter to the folder
@@ -81,10 +81,6 @@ if __name__ == "__main__":
 
 We can  run the application in your local system
 
-```
-% python wsgi.py
-```
-
 and verify that it works locally
 
 This has the following requirements.txt 
@@ -153,7 +149,7 @@ if we type only `heroku create` it is automatically generated instance name plus
 
 When you create an app, a git remote (called `heroku`) is also created and associated with your local git repository.
 
-Heroku generates a random name (in this case `voicetotext-ruslanmv`) for your app, or you can pass a parameter to specify your own app name.
+Heroku generates a random name (in this case `speech-app-new`) for your app, or you can pass a parameter to specify your own app name.
 
 If you haven’t already added these files to a git repo, do it by running the following in your terminal:
 
@@ -173,51 +169,25 @@ heroku open
 
 You’ll notice the web address is 
 
-[https://voicetotext-ruslanmv.herokuapp.com/](https://voicetotext-ruslanmv.herokuapp.com/)
-
-![](./assets/images/posts/README/page.jpg)
+[https://speech-app-new.herokuapp.com/](https://speech-app-new.herokuapp.com/)
 
 If you enter, you should wait at least one minute to initialize the application.
 
-
-
 The current version of the application  work with **4 steps**
-
-
 
 **Step 1**: Record your voice with your microphone
 
-
-
-![](./assets/images/posts/README/1aa.jpg)
-
-
-
 You should allow use your microphone. and when you finish to record press **stop**
-
-![](./assets/images/posts/README/2aa.jpg)
-
-
 
 **Step2** . Download your file to your desktop
 
-
-
-![](./assets/images/posts/README/3aaa.jpg)
-
 Step 3. Upload your wave file and then
-
-
-
-![](./assets/images/posts/README/3aaav.jpg)
 
 Step 4 press transcribe button and you see the results
 
-![](./assets/images/posts/README/4aa.jpg)
-
 You can try:
 
-[https://voicetotext-ruslanmv.herokuapp.com/](https://voicetotext-ruslanmv.herokuapp.com/)
+[https://speech-app-new.herokuapp.com/](https://speech-app-new.herokuapp.com/)
 
 
 

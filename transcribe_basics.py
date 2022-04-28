@@ -203,7 +203,7 @@ def Transcribe(local_file_path ,object_key):
     # file_url = object_key +".txt"
     file_url = "results.txt"
     createfile(file_url ,result )
-    pushdata(file_url,file_url)
+    #pushdata(file_url,file_url)
     # print("reed from text file" +'-'*88)
     # # file_url= "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt"
     # url =upload_bucket(S3_BUCKET, file_url ,file_url)
@@ -223,9 +223,9 @@ def read(path_to_file):
         contents = f.readlines()
     return contents
 
-def pushdata(fileName,gitHubFileName):
-    repo_slug = os.environ.get('repo_slug')
-    branch = "main"
-    user =os.environ.get('user')
-    token = os.environ.get('token')
-    pushto.push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token)
+# def pushdata(fileName,gitHubFileName):
+#     repo_slug = os.environ.get('repo_slug')
+#     branch = "main"
+#     user =os.environ.get('user')
+#     token = os.environ.get('token')
+#     pushto.push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token)
