@@ -52,7 +52,7 @@
 					$("#btt").click(function(){
 						var url = {{results.url|tojson}};
 						$.get(url, function(data, status){
-							alert("Data: " + data + "\nStatus: " + status);
+							// alert("Data: " + data + "\nStatus: " + status);
 							document.getElementById("arabic").textContent = data
 							cons.console.log(data);
 
