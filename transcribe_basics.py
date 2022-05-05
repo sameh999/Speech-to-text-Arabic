@@ -1,22 +1,22 @@
+from custom_waiter import CustomWaiter, WaitState
 import logging
 import sys
 import time
 from unittest import result
 import boto3
 from botocore.exceptions import ClientError
-import requests 
+import requests
 import os
 import push_file_to_github as pushto
 
-region ="us-east-1"
+region = "us-east-1"
 session = boto3.Session(
     aws_access_key_id=os.environ.get('AWS_ACCESS_KEY'),
-    aws_secret_access_key = os.environ.get('AWS_SECRET_KEY'),
-    region_name =region
+    aws_secret_access_key=os.environ.get('AWS_SECRET_KEY'),
+    region_name=region
 )
 S3_BUCKET = os.environ.get('S3_BUCKET')
 sys.path.append('../..')
-from custom_waiter import CustomWaiter, WaitState
 logger = logging.getLogger(__name__)
 
 
@@ -30,11 +30,13 @@ class TranscribeCompleteWaiter(CustomWaiter):
 
     def wait(self, job_name):
         self._wait(TranscriptionJobName=job_name)
-    
+
+
 class VocabularyReadyWaiter(CustomWaiter):
     """
     Waits for the custom vocabulary to be ready for use.
     """
+
     def __init__(self, client):
         super().__init__(
             'VocabularyReady', 'GetVocabulary', 'VocabularyState',
@@ -44,7 +46,7 @@ class VocabularyReadyWaiter(CustomWaiter):
         self._wait(VocabularyName=vocabulary_name)
 
 
-def start_job(job_name, media_uri, media_format, language_code, transcribe_client,vocabulary_name=None):
+def start_job(job_name, media_uri, media_format, language_code, transcribe_client, vocabulary_name=None):
     try:
         job_args = {
             'TranscriptionJobName': job_name,
@@ -104,22 +106,27 @@ def delete_job(job_name, transcribe_client):
         logger.exception("Couldn't delete job %s.", job_name)
         raise
 
+
 def create_vocabulary(
         vocabulary_name, language_code, transcribe_client,
         phrases=None, table_uri=None):
     try:
-        vocab_args = {'VocabularyName': vocabulary_name, 'LanguageCode': language_code}
+        vocab_args = {'VocabularyName': vocabulary_name,
+                      'LanguageCode': language_code}
         if phrases is not None:
             vocab_args['Phrases'] = phrases
         elif table_uri is not None:
             vocab_args['VocabularyFileUri'] = table_uri
         response = transcribe_client.create_vocabulary(**vocab_args)
-        logger.info("Created custom vocabulary %s.", response['VocabularyName'])
+        logger.info("Created custom vocabulary %s.",
+                    response['VocabularyName'])
     except ClientError:
-        logger.exception("Couldn't create custom vocabulary %s.", vocabulary_name)
+        logger.exception(
+            "Couldn't create custom vocabulary %s.", vocabulary_name)
         raise
     else:
         return response
+
 
 def list_vocabularies(vocabulary_filter, transcribe_client):
     try:
@@ -143,9 +150,10 @@ def list_vocabularies(vocabulary_filter, transcribe_client):
 
 
 def get_vocabulary(vocabulary_name, transcribe_client):
-  
+
     try:
-        response = transcribe_client.get_vocabulary(VocabularyName=vocabulary_name)
+        response = transcribe_client.get_vocabulary(
+            VocabularyName=vocabulary_name)
         logger.info("Got vocabulary %s.", response['VocabularyName'])
     except ClientError:
         logger.exception("Couldn't get vocabulary %s.", vocabulary_name)
@@ -158,16 +166,20 @@ def update_vocabulary(
         vocabulary_name, language_code, transcribe_client, phrases=None,
         table_uri=None):
     try:
-        vocab_args = {'VocabularyName': vocabulary_name, 'LanguageCode': language_code}
+        vocab_args = {'VocabularyName': vocabulary_name,
+                      'LanguageCode': language_code}
         if phrases is not None:
             vocab_args['Phrases'] = phrases
         elif table_uri is not None:
             vocab_args['VocabularyFileUri'] = table_uri
         response = transcribe_client.update_vocabulary(**vocab_args)
-        logger.info("Updated custom vocabulary %s.", response['VocabularyName'])
+        logger.info("Updated custom vocabulary %s.",
+                    response['VocabularyName'])
     except ClientError:
-        logger.exception("Couldn't update custom vocabulary %s.", vocabulary_name)
+        logger.exception(
+            "Couldn't update custom vocabulary %s.", vocabulary_name)
         raise
+
 
 def delete_vocabulary(vocabulary_name, transcribe_client):
 
@@ -178,50 +190,56 @@ def delete_vocabulary(vocabulary_name, transcribe_client):
         logger.exception("Couldn't delete vocabulary %s.", vocabulary_name)
         raise
 
-def upload_bucket(bucket_name ,local_file_path, obj_key):
-    
+
+def upload_bucket(bucket_name, local_file_path, obj_key):
+
     s3_resource = session.resource('s3')
     print(f"Creating bucket {bucket_name}.")
-    s3_resource.meta.client.upload_file(local_file_path , bucket_name, obj_key)
+    s3_resource.meta.client.upload_file(local_file_path, bucket_name, obj_key)
     media_uri = f's3://{bucket_name}/{obj_key}'
     return media_uri
 
-def Transcribe(local_file_path ,object_key):
+
+def Transcribe(local_file_path, object_key):
     transcribe_client = session.client('transcribe')
-    media_uri =upload_bucket(S3_BUCKET, local_file_path , local_file_path)
+    media_uri = upload_bucket(S3_BUCKET, local_file_path, local_file_path)
     job_name_simple = f'demo-{time.time_ns()}'
     print(f"Starting transcription job {job_name_simple}")
-    start_job( job_name_simple, media_uri, 'wav', 'ar-AE', transcribe_client)
+    start_job(job_name_simple, media_uri, 'wav', 'ar-AE', transcribe_client)
     transcribe_waiter = TranscribeCompleteWaiter(transcribe_client)
     transcribe_waiter.wait(job_name_simple)
     job_simple = get_job(job_name_simple, transcribe_client)
-    transcript_simple = requests.get(job_simple['Transcript']['TranscriptFileUri']).json()
+    transcript_simple = requests.get(
+        job_simple['Transcript']['TranscriptFileUri']).json()
     print(f"Transcript for job {transcript_simple['jobName']}:")
     result = transcript_simple['results']['transcripts'][0]['transcript']
     delete_job(job_name_simple, transcribe_client)
     print(result)
-    # file_url = object_key +".txt"
-    file_url = "results.txt"
-    createfile(file_url ,result )
-    #pushdata(file_url,file_url)
-    # print("reed from text file" +'-'*88)
+    file_url = object_key + ".txt"
+    # file_url = "results.txt"
+    createfile(file_url, result)
+    # pushdata(file_url,file_url)
+    print("reed from text file" + '-'*88)
     # # file_url= "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt"
-    # url =upload_bucket(S3_BUCKET, file_url ,file_url)
-    # print("uri link " + url)
-    print(read(file_url))
+    url = upload_bucket(S3_BUCKET, file_url, file_url)
+    print("uri link " + url)
+    # print(read(file_url))
     os.remove(local_file_path)
-    return result   
+    return result
 
-def createfile( url ,text):
+
+def createfile(url, text):
     # with open('results.txt', 'w'):
     #     pass
-    f= open(url,"w+", encoding='utf-8')
+    f = open(url, "w+", encoding='utf-8')
     f.write(text)
     f.close
+
+
 def read(path_to_file):
     with open(path_to_file) as f:
         contents = f.readlines()
-    return contents 
+    return contents
 
 # def pushdata(fileName,gitHubFileName):
 #     repo_slug = os.environ.get('repo_slug')
