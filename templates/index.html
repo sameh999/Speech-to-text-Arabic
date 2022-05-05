@@ -1,54 +1,85 @@
+<!-- @format -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Speech Recognition </title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}" />
-	<!-- Latest compiled and minified Bootstrap CSS -->
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
-   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-   <script src="https://sdk.amazonaws.com/js/aws-sdk-SDK_VERSION_NUMBER.js"></script>
-
-
-</head>
-<body>
-    <h1>Transcribe your voice to text </h1>
-    <h3>Record your voice</h3>
-    <div style="max-width: 28em;">
-		<div id="controls">
-			<button id="recordButton">Record</button>
-			<button id="stopButton" disabled>Stop</button>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Speech Recognition</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='styles/index.css') }}"
+		/>
+		<!-- Latest compiled and minified Bootstrap CSS -->
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+		<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<!-- <script src="https://sdk.amazonaws.com/js/aws-sdk-SDK_VERSION_NUMBER.js"></script> -->
+	</head>
+	<body>
+		<h1>Transcribe your voice to text</h1>
+		<h3>Record your voice</h3>
+		<div style="max-width: 28em">
+			<div id="controls">
+				<button id="recordButton">Record</button>
+				<button id="stopButton" disabled>Stop</button>
+			</div>
+			<div id="formats"></div>
+			<pre id="log"></pre>
+			<br />
+			<h3>Download your record</h3>
+			<ol id="recordingsList"></ol>
 		</div>
-		<div id="formats"></div>
-		<pre id="log"></pre>
-        <br>
-        <h3>Download your record </h3> 
-		<ol id="recordingsList"></ol>
-	</div>
-    <div id="speechContainer">
-        <h3>Upload your .wav file</h3> 
+		<div id="speechContainer">
+			<h3>Upload your .wav file</h3>
 
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <br>
-            <h3>Convert audio to text </h3> 
-            <input type="submit" id="submitButton" value="Transcribe"/>
-        </form>
-     
-        <div id="speechTranscript">
-        {% if results.transcript != "" %}
-            <div id="speechTranscriptContainer">
-                <button id="btt">get text</button>
-                <h1>Results</h1>
-                <p id="speechText">{{ results.transcript }}</p>
-                <p id="arabic"> </p>
-            </div>
-            
-        {% endif %}
-        </div> 
-        <!-- <script>
+			<form method="post" enctype="multipart/form-data">
+				<input type="file" name="file" />
+				<br />
+				<h3>Convert audio to text</h3>
+				<input type="submit" id="submitButton" value="Transcribe" />
+			</form>
+
+			<div id="speechTranscript">
+				{% if results.transcript != "" %}
+				<div id="speechTranscriptContainer">
+					<button id="btt">get text</button>
+					<h1>Results</h1>
+					<p id="speechText">{{ results.transcript }}</p>
+					<p id="arabic"></p>
+				</div>
+				<script>
+					$("#btt").click(function(){
+						var url = {{results.url|tojson}};
+						$.get(url, function(data, status){
+							alert("Data: " + data + "\nStatus: " + status);
+							document.getElementById("arabic").textContent = data
+							cons.console.log(data);
+
+						});
+					});
+				</script>
+				<!-- 
+				<script>
+					var url = {{results.url|tojson}};
+					fetch(url)
+					.then(response =>{
+					    if(response.status === 200){
+					        data = response.text()
+					    document.getElementById("arabic").textContent = data
+					    cons.console.log(data);
+					    }
+					}).then(data => {
+					    // Do something with your data
+					    console.log("data2");
+					    console.log(data);
+					}).then(error => console.log(error));
+				</script> -->
+
+				{% endif %}
+			</div>
+		</div>
+		<!-- <script>s
 
                 function loadDoc() {
                     var xhttp = new XMLHttpRequest();
@@ -60,21 +91,20 @@
                 }
                 // document.getElementById("txt").textContent
             </script>        -->
-    <script>
+		<!-- <script>
         $("#btt").click(function(){
-            var url ='https://myfilestorage1.s3.amazonaws.com/demo-1651706105226553971.txt'; // {{results.url|tojson}};
+            var url = {{results.url|tojson}};
             $.get(url, function(data, status){
                 alert("Data: " + data + "\nStatus: " + status);
                 document.getElementById("arabic").textContent = data
                 cons.console.log(data);
                 
             });
-        });
-    </script>
-    <!-- <script>    
+        }); -->
+		<!-- <script>    
         const filepath = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
         function readTextFile(filepath) {
-        var str = "";
+         svartr = "";
         var txtFile = new File(filepath);
         txtFile.open("r");
         while (!txtFile.eof) {
@@ -85,15 +115,27 @@
         }
         var get_text = document.getElementById("get_txt");
         get_text.addEventListener("click", readTextFile);
+                <script>
+					var url = {{results.url|tojson}};
+					fetch(url)
+					.then(response =>{
+					    if(response.status === 200){
+					        data = response.text()
+					    document.getElementById("arabic").textContent = data
+					    cons.console.log(data);
+					    }
+					}).then(data => {
+					    // Do something with your data
+					    console.log("data2");
+					    console.log(data);
+					}).then(error => console.log(error));
+				</script>
 
-    </script> -->
 
+</script> -->
 
-    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
-    <script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}" ></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}" ></script>
-    <script src="{{ url_for('static', filename='js/get_text.js') }}" ></script>
-    
-
-</body>
+		<!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+		<script src="{{ url_for('static', filename='js/WebAudioRecorder.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+	</body>
 </html>

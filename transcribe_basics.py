@@ -7,15 +7,16 @@ import boto3
 from botocore.exceptions import ClientError
 import requests
 import os
-import push_file_to_github as pushto
 
 region = "us-east-1"
 session = boto3.Session(
-    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY'),
-    aws_secret_access_key=os.environ.get('AWS_SECRET_KEY'),
+    # os.environ.get('AWS_ACCESS_KEY'),
+    aws_access_key_id="AKIAV7ST367FOVQPH6F7",
+    # os.environ.get('AWS_SECRET_KEY'),
+    aws_secret_access_key="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",
     region_name=region
 )
-S3_BUCKET = os.environ.get('S3_BUCKET')
+S3_BUCKET = "myfilestorage1"  # os.environ.get('S3_BUCKET')
 sys.path.append('../..')
 logger = logging.getLogger(__name__)
 
@@ -220,7 +221,6 @@ def Transcribe(local_file_path, object_key):
     createfile(file_url, result)
     # pushdata(file_url,file_url)
     print("reed from text file" + '-'*88)
-    # # file_url= "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt"
     url = upload_bucket(S3_BUCKET, file_url, file_url)
     print("uri link " + url)
     # print(read(file_url))
@@ -240,10 +240,3 @@ def read(path_to_file):
     with open(path_to_file) as f:
         contents = f.readlines()
     return contents
-
-# def pushdata(fileName,gitHubFileName):
-#     repo_slug = os.environ.get('repo_slug')
-#     branch = "main"
-#     user =os.environ.get('user')
-#     token = os.environ.get('token')
-#     pushto.push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token)
