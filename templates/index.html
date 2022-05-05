@@ -38,25 +38,29 @@
         </form>
      
         <div id="speechTranscript">
-        {% if transcript != "" %}
+        {% if results.transcript != "" %}
             <div id="speechTranscriptContainer">
                 <h1>Results</h1>
-                <p id="speechText">{{ transcript }}</p>
+                <p id="speechText">{{ results.transcript }}</p>
+                <p id="arabic"></p>
+                <
             </div>
+            <script>
+                var url = {{results.url|tojson}};
+
+                function loadDoc() {
+                    var xhttp = new XMLHttpRequest();
+                
+                    xhttp.open("GET",url , true);
+                    xhttp.send();
+                    document.getElementById("arabic").innerHTML = xhttp.responseText;
+                    console.log(xhttp.responseText)
+                }
+                // document.getElementById("txt").textContent
+            </script>>
         {% endif %}
-        <p id="arabic"></p>
-        </div>
-        </div>
-    
-        <!-- <script>
-            function loadDoc() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt", true);
-            xhttp.send();
-            document.getElementById("arabic").innerHTML = xhttp.responseText;
-            console.log(xhttp.responseText)
-            }document.getElementById("txt").textContent
-        </script>> -->
+        </div>    
+        
     <!-- <script>
         $("#btt").click(function(){
             $.get( "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt", function(data, status){

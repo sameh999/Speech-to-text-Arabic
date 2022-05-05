@@ -221,7 +221,7 @@ def createfile( url ,text):
 def read(path_to_file):
     with open(path_to_file) as f:
         contents = f.readlines()
-    return contents
+    return contents 
 
 # def pushdata(fileName,gitHubFileName):
 #     repo_slug = os.environ.get('repo_slug')
