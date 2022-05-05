@@ -43,14 +43,12 @@
                 <h1>Results</h1>
                 <p id="speechText">{{ results.transcript }}</p>
                 <p id="arabic"></p>
-                <
             </div>
             <script>
-                var url = {{results.url|tojson}};
 
                 function loadDoc() {
                     var xhttp = new XMLHttpRequest();
-                
+                    var url ='https://myfilestorage1.s3.amazonaws.com/demo-1651706105226553971.txt'; // {{results.url|tojson}};
                     xhttp.open("GET",url , true);
                     xhttp.send();
                     document.getElementById("arabic").innerHTML = xhttp.responseText;

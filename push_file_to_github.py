@@ -4,7 +4,7 @@
 # import requests
 
 # # def push_data(token):
-   
+
 # #     gh = Github(login_or_token=token, base_url="https://api.github.com/sameh999")
 # #     user = gh.get_user()
 # #     print("this the user we get" ,user)
@@ -12,7 +12,7 @@
 # #     file = repo.get_file_contents("results.txt")
 # #     decoded_content = file.decoded_content
 # #     repo.update_file("results.txt", "py Comments", decoded_content, file.sha)
-            
+
 #     # g = Github(token)
 #     # g = Github(base_url="https://sameh999/api/v3", login_or_token=token)
 #     # repo = g.get_user().get_repo("Speech-to-text-Arabic")
@@ -56,8 +56,8 @@
 #     :return None
 #     :raises Exception: if file with the specified name cannot be found in the repo
 #     '''
-#     "https://api.github.com/repos/sameh999/Speech-to-text-Arabic/branches/main" 
-    
+#     "https://api.github.com/repos/sameh999/Speech-to-text-Arabic/branches/main"
+
 #     message = "Automated update " + str(datetime.datetime.now())
 #     path = "https://api.github.com/repos/%s/branches/%s" % (repo_slug, branch)
 
@@ -99,7 +99,7 @@
 #     inputdata["content"] = content
 #     if sha:
 #         inputdata["sha"] = str(sha)
-# # /blob/main/results.txt   
+# # /blob/main/results.txt
 #     updateURL = "https://api.github.com/repos/sameh999/Speech-to-text-Arabic/branches/main/"
 #     try:
 #         rPut = requests.put(updateURL, auth=(user,token), data = json.dumps(inputdata))
@@ -116,3 +116,5 @@
 
 # push_to_repo_branch("results.txt" ,"results.txt" ,"sameh999/Speech-to-text-Arabic" ,
 #                     "main" ,"sameh999","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" )
+
+# url = 'https://myfilestorage1.s3.amazonaws.com/demo-1651706105226553971.txt'

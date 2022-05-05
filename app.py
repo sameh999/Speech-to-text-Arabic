@@ -37,8 +37,8 @@ def index():
 
             task(audio_path, audio_name)
             transcript = " the text will be available a soon as possible "
-            url = "https://myfilestorage1.s3.amazonaws.com/"+audio_name+".txt"
-    return render_template('index.html',results = {"transcript": transcript, "url": url})
+            url = 'https://myfilestorage1.s3.amazonaws.com/'+audio_name+'.txt'
+    return render_template('index.html', results={"transcript": transcript, "url": url})
 
 
 def task(audio_path, audio_name):
