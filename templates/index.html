@@ -40,9 +40,10 @@
         <div id="speechTranscript">
         {% if results.transcript != "" %}
             <div id="speechTranscriptContainer">
+                <button onclick="loadDoc">get text</button>
                 <h1>Results</h1>
                 <p id="speechText">{{ results.transcript }}</p>
-                <p id="arabic"></p>
+                <p id="arabic"> </p>
             </div>
             <script>
 
@@ -55,7 +56,7 @@
                     console.log(xhttp.responseText)
                 }
                 // document.getElementById("txt").textContent
-            </script>>
+            </script>
         {% endif %}
         </div>    
         
