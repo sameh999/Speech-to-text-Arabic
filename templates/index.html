@@ -40,12 +40,15 @@
         <div id="speechTranscript">
         {% if results.transcript != "" %}
             <div id="speechTranscriptContainer">
-                <button onclick="loadDoc()">get text</button>
+                <button id="btt">get text</button>
                 <h1>Results</h1>
                 <p id="speechText">{{ results.transcript }}</p>
                 <p id="arabic"> </p>
             </div>
-            <script>
+            
+        {% endif %}
+        </div>   s
+        <!-- <script>
 
                 function loadDoc() {
                     var xhttp = new XMLHttpRequest();
@@ -56,20 +59,18 @@
                     console.log(xhttp.responseText)
                 }
                 // document.getElementById("txt").textContent
-            </script>
-        {% endif %}
-        </div>    
-        
-    <!-- <script>
+            </script>        -->
+    <script>
         $("#btt").click(function(){
-            $.get( "https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt", function(data, status){
+            var url ='https://myfilestorage1.s3.amazonaws.com/demo-1651706105226553971.txt'; // {{results.url|tojson}};
+            $.get(url, function(data, status){
                 alert("Data: " + data + "\nStatus: " + status);
                 document.getElementById("arabic").textContent = data
                 cons.console.log(data);
                 
             });
         });
-    </script> -->
+    </script>
     <!-- <script>    
         const filepath = 'https://raw.githubusercontent.com/sameh999/Speech-to-text-Arabic/main/results.txt'
         function readTextFile(filepath) {
