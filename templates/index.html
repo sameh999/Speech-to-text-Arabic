@@ -9,7 +9,6 @@
 			rel="stylesheet"
 			href="{{ url_for('static', filename='styles/index.css') }}"
 		/>
-		<!-- Latest compiled and minified Bootstrap CSS -->
 		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 		<!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
 		<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -49,16 +48,57 @@
 					<p id="arabic"></p>
 				</div>
 				<script>
-					$("#btt").click(function(){
-						var url = {{results.url|tojson}};
-						$.get(url, function(data, status){
+					var url = {{results.url|tojson}};
+						//    "https://myfilestorage1.s3.amazonaws.com/demo-1651827316563836500.txt";
+					function read() {
+						$.get(url, function (data, status) {
 							// alert("Data: " + data + "\nStatus: " + status);
-							document.getElementById("arabic").textContent = data
-							cons.console.log(data);
-
+							document.getElementById("speechText").textContent = data;
+							console.log(data);
+							console.log("done");
 						});
-					});
+					}
+					function testFileExists(url, read, failFunc) {
+						var xhr = new XMLHttpRequest();
+						xhr.onreadystatechange = function () {
+							if (this.readyState === this.DONE) {
+								if (xhr.status === 200) {
+									read();
+								} else {
+									failFunc(xhr);
+								}
+							}
+						};
+						xhr.timeout = 50000; // TIMEOUT SET TO PREFERENCE (5 SEC)
+						xhr.open("HEAD", url, true);
+						xhr.send();
+					}
+					function fileNotFound(xhr) {
+						console.log("not found");
+						setTimeout(testFileExists(url, read, fileNotFound), 20000);
+					}
+
+					testFileExists(url, read, fileNotFound);
+					console.log("data2");
 				</script>
+				<!-- <script>
+					// function fileExists(xhr) {
+					// 	// gettext(url);
+					// 	console.log("found ????");
+					// 	console.log("found");
+					// }
+					// $("#btt").click(function () {
+					// 	var url =
+					// 		"https://myfilestorage1.s3.amazonaws.com/demo-1651827316563836500.txt";
+
+					// 	$.get(url, function (data, status) {
+					// 		// alert("Data: " + data + "\nStatus: " + status);
+					// 		document.getElementById("arabic").textContent = data;
+					// 		cons.console.log(data);
+					// 		console.log("done");
+					// 	});
+					// });
+				</script> -->
 				<!-- 
 				<script>
 					var url = {{results.url|tojson}};
@@ -74,7 +114,8 @@
 					    console.log("data2");
 					    console.log(data);
 					}).then(error => console.log(error));
-				</script> -->
+				</script>
+			 -->
 
 				{% endif %}
 			</div>

@@ -34,7 +34,6 @@ def index():
 
             with open(audio_path, "wb") as f:
                 f.write(data.get_wav_data())
-
             task(audio_path, audio_name)
             transcript = " the text will be available a soon as possible "
             url = 'https://myfilestorage1.s3.amazonaws.com/'+audio_name+'.txt'

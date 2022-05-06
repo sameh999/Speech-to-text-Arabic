@@ -4,9 +4,12 @@ import logging
 import botocore.waiter
 
 logger = logging.getLogger(__name__)
+
+
 class WaitState(Enum):
     SUCCESS = 'success'
     FAILURE = 'failure'
+
 
 class CustomWaiter:
     def __init__(
