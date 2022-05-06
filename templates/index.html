@@ -42,14 +42,11 @@
 			<div id="speechTranscript">
 				{% if results.transcript != "" %}
 				<div id="speechTranscriptContainer">
-					<button id="btt">get text</button>
 					<h1>Results</h1>
 					<p id="speechText">{{ results.transcript }}</p>
-					<p id="arabic"></p>
 				</div>
 				<script>
 					var url = {{results.url|tojson}};
-						//    "https://myfilestorage1.s3.amazonaws.com/demo-1651827316563836500.txt";
 					function read() {
 						$.get(url, function (data, status) {
 							// alert("Data: " + data + "\nStatus: " + status);
@@ -81,7 +78,12 @@
 					testFileExists(url, read, fileNotFound);
 					console.log("data2");
 				</script>
-				<!-- <script>
+
+				{% endif %}
+			</div>
+		</div>
+		<!-- <script>s
+		 <script>
 					// function fileExists(xhr) {
 					// 	// gettext(url);
 					// 	console.log("found ????");
@@ -99,7 +101,7 @@
 					// 	});
 					// });
 				</script> -->
-				<!-- 
+		<!-- 
 				<script>
 					var url = {{results.url|tojson}};
 					fetch(url)
@@ -115,13 +117,7 @@
 					    console.log(data);
 					}).then(error => console.log(error));
 				</script>
-			 -->
-
-				{% endif %}
-			</div>
-		</div>
-		<!-- <script>s
-
+			
                 function loadDoc() {
                     var xhttp = new XMLHttpRequest();
                     var url ='https://myfilestorage1.s3.amazonaws.com/demo-1651706105226553971.txt'; // {{results.url|tojson}};
