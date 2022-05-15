@@ -10,13 +10,11 @@ import os
 
 region = "us-east-1"
 session = boto3.Session(
-    # os.environ.get('AWS_ACCESS_KEY'),
-    aws_access_key_id="AKIAV7ST367FOVQPH6F7",
-    # os.environ.get('AWS_SECRET_KEY'),
-    aws_secret_access_key="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",
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_KEY'),
     region_name=region
 )
-S3_BUCKET = "myfilestorage1"  # os.environ.get('S3_BUCKET')
+S3_BUCKET = os.environ.get('S3_BUCKET')
 sys.path.append('../..')
 logger = logging.getLogger(__name__)
 
@@ -217,20 +215,16 @@ def Transcribe(local_file_path, object_key):
     delete_job(job_name_simple, transcribe_client)
     print(result)
     file_url = object_key + ".txt"
-    # file_url = "results.txt"
     createfile(file_url, result)
-    # pushdata(file_url,file_url)
     print("reed from text file" + '-'*88)
     url = upload_bucket(S3_BUCKET, file_url, file_url)
     print("uri link " + url)
-    # print(read(file_url))
     os.remove(local_file_path)
+    os.remove(file_url)
     return result
 
 
 def createfile(url, text):
-    # with open('results.txt', 'w'):
-    #     pass
     f = open(url, "w+", encoding='utf-8')
     f.write(text)
     f.close
