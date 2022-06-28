@@ -1,5 +1,8 @@
 # Record your voice to text using Flask 
 
+<img src="images/1.jpg" alt="project design" width="100%" height="400"/> 
+<h1 align="center">Hi 👋, speech to text interface the results can e edited and downloaded as text or word file </h1>
+
 In this blog post, we are going to create a simple web app that allows us record our voice from the web browser and convert it to text by using the we browser
 
 First we get the main programs
